@@ -32,7 +32,7 @@ class pycrypto():
                         bd=7, relief=SUNKEN)
         F4.place(x=0, y=600, relwidth=1, height=100)
 
-        Label(F4, text="Thank You!", font=("times new roman", 40, "bold"), bg="cyan", fg="red", padx=550,
+        Label(F4, text="Thank You!", font=("times new roman", 40, "bold"), bg="cyan", fg="red", padx=550, 
               pady=3).grid(row=0, column=0)
 
 
