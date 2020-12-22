@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+import pyperclip
+import math
 
 class Pycrypto():
     def __init__(self, root):
@@ -46,7 +48,17 @@ class Pycrypto():
     def encrypt(self):
         self.result.set('')
         if str(self.algo.get()) == 'Transposition Cipher':
-            self.result.set('Tra')
+            a = str(self.text.get())
+            ciphertext = [''] * self.key.get()
+            for col in range(self.key.get()):
+                position = col
+                while position < len(a):
+                    ciphertext[col] += a[position]
+                    position += self.key.get()
+            ciphertext = ''.join(ciphertext)
+            self.result.set(ciphertext)
+            pyperclip.copy(ciphertext)
+
         elif str(self.algo.get()) == 'Caesar Cipher' or 'ROT13 Cipher':
             if str(self.algo.get()) == 'ROT13 Cipher':
                 self.key.set(13)
@@ -64,13 +76,29 @@ class Pycrypto():
                 else:
                     self.res = self.res + str(letter)
             self.result.set(self.res)
+            pyperclip.copy(self.res)
         if str(self.text.get()) == '':
             messagebox.showerror("Error", "Input text to encrypt")
 
     def decrypt(self):
         self.result.set('')
         if str(self.algo.get()) == 'Transposition Cipher':
-            self.result.set('deTra')
+            a = str(self.text.get())
+            numOfColumns = math.ceil(len(a) / self.key.get())
+            numOfRows = self.key.get()
+            numOfShadedBoxes = (numOfColumns * numOfRows) - len(a)
+            plaintext = [''] * numOfColumns
+            col = 0
+            row = 0
+            for symbol in a:
+                plaintext[col] += symbol
+                col += 1
+                if (col == numOfColumns) or (col == numOfColumns - 1 and row >= numOfRows - numOfShadedBoxes):
+                    col = 0
+                    row += 1
+            plaintext = ''.join(plaintext)
+            self.result.set(plaintext)
+            pyperclip.copy(plaintext)
         elif str(self.algo.get()) == 'Caesar Cipher' or 'ROT13 Cipher':
             if str(self.algo.get()) == 'ROT13 Cipher':
                 self.key.set(13)
@@ -88,6 +116,7 @@ class Pycrypto():
                 else:
                     self.res = self.res + str(letter)
             self.result.set(self.res)
+            pyperclip.copy(self.res)
         if str(self.text.get()) == '':
             messagebox.showerror("Error", "Input text to Decrypt")
 
