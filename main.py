@@ -16,7 +16,7 @@ class Pycrypto():
         title.pack(fill=X)
 
         self.text = StringVar()
-        self.algo = ''
+        self.algo = StringVar()
         self.result = StringVar()
         self.key = IntVar()
 
@@ -26,7 +26,7 @@ class Pycrypto():
         Entry(F1, width=20, font="arial 15", bd=7, relief=SUNKEN,textvariable=self.text).grid(row=1, column=0, padx=10, pady=3)
 
         Label(self.root, text="Choose algorithm", font=("arial", 15, "bold"), bg=abg, fg=t_clr, padx=20, pady=10).place(x=370, y=190)
-        algochoosen = ttk.Combobox(self.root,values=[' Caesar Cipher',' Transposition Cipher',' Rail Fence Cipher'], font=("arial", 15, "bold"),width=22, textvariable=self.algo)
+        algochoosen = ttk.Combobox(self.root,values=['Caesar Cipher','ROT13 Cipher','Transposition Cipher'], font=("arial", 15, "bold"),width=22, textvariable=self.algo)
         algochoosen.place(x=350,y= 250)
         algochoosen.current(0)
 
@@ -34,7 +34,7 @@ class Pycrypto():
         Entry(self.root,width=20, font="arial 15",bd=7,textvariable=self.key,relief=SUNKEN).place(x=350, y=350)
 
         Button(self.root,width=15,text="Encrypt", font=("arial", 14, "bold"), bg=bclr, fg=t_clr, bd=7, command=self.encrypt).place(x=650, y=243 )
-        Button(self.root, width=15,text="Decrypt",font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7).place(x=650,y=343)
+        Button(self.root, width=15,text="Decrypt",font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7, command=self.decrypt).place(x=650,y=343)
 
         F2 = LabelFrame(self.root, text="Output", font=("arial", 15, "bold"), bg=bg_clr, fg=t_clr, bd=7,relief=SUNKEN)
         F2.place(x=890, y=100, width=320, height=370)
@@ -50,16 +50,38 @@ class Pycrypto():
 
     def encrypt(self):
         self.result.set('')
-        a = str(self.text.get())
-        alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        self.res = str(self.result.get())
-        for letter in a:
-            if letter in alpha:
-                letter_index = (alpha.find(letter) + int(self.key.get())) % len(alpha)
-                self.res = self.res + str(alpha[letter_index])
-            else:
-                self.res = self.res + str(letter)
-        self.result.set(self.res)
+        if str(self.algo.get()) == 'Caesar Cipher':
+            a = str(self.text.get())
+            alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            alphas = "abcdefghijklmnopqrstuvwxyz"
+            self.res = str(self.result.get())
+            for letter in a:
+                if letter in alpha:
+                    letter_index = (alpha.find(letter) + int(self.key.get())) % len(alpha)
+                    self.res = self.res + str(alpha[letter_index])
+                elif letter in alphas:
+                    letter_index = (alphas.find(letter) + int(self.key.get())) % len(alpha)
+                    self.res = self.res + str(alphas[letter_index])
+                else:
+                    self.res = self.res + str(letter)
+            self.result.set(self.res)
+
+        elif str(self.algo.get()) == 'ROT13 Cipher':
+            self.result.set('Rot')
+
+        elif str(self.algo.get()) == 'Transposition Cipher':
+            self.result.set('Tra')
+
+    def decrypt(self):
+        self.result.set('')
+        if str(self.algo.get()) == 'Caesar Cipher':
+            self.result.set('Decae')
+
+        elif str(self.algo.get()) == 'ROT13 Cipher':
+            self.result.set('deRot')
+
+        elif str(self.algo.get()) == 'Transposition Cipher':
+            self.result.set('deTra')
 
     def clear_all(self):
         op = messagebox.askyesno("clear", "Do you really want to clear all data?")
