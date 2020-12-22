@@ -20,7 +20,7 @@ class Pycrypto():
         self.algo = StringVar()
         self.result = StringVar()
         self.key = IntVar()
-        Label(self.root, text="Input Text", font=("arial", 15, "bold"), bg=abg, fg=t_clr).place(x=50, y=100)
+        Label(self.root, text="Input Text", font=("arial", 15, "bold"), bg=abg, fg=t_clr).place(x=50, y=120)
         Entry(self.root, width=100, font="arial 15", bd=7, relief=SUNKEN,textvariable=self.text).place(x=50, y=170)
         Label(self.root, text="Choose Algorithm", font=("arial", 15, "bold"), bg=abg, fg=t_clr, padx=20, pady=10).place(x=100, y=250)
         algochoosen = ttk.Combobox(self.root,values=['Caesar Cipher','ROT13 Cipher','Transposition Cipher'], font=("arial", 13),width=22, textvariable=self.algo)
@@ -33,7 +33,7 @@ class Pycrypto():
         Button(self.root,width=15,text="Encrypt", font=("arial", 14, "bold"), bg=bclr, fg=t_clr, bd=7, command=self.encrypt).place(x=70, y=490 )
         Button(self.root, width=15,text="Decrypt",font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7, command=self.decrypt).place(x=290,y=490)
         Button(self.root, width=15,text="Swap Output",font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7, command=self.swap).place(x=510,y=490)
-        Label(self.root, text="Output Text", font=("arial", 15, "bold"), bg=abg, fg=t_clr).place(x=50, y=330)
+        Label(self.root, text="Output Text", font=("arial", 15, "bold"), bg=abg, fg=t_clr).place(x=50, y=350)
         Entry(self.root, width=100, font="arial 15", bd=7,textvariable=self.result,  relief=SUNKEN).place(x=50, y=400)
         exit_button = Button(self.root, width=15,text="Exit",command = self.exit ,font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7)
         exit_button.place(x=950, y=490)
@@ -84,7 +84,7 @@ class Pycrypto():
 
     def decrypt(self):
         self.result.set('')
-        if str(self.algo.get()) == 'Transposition Cipher':
+        if str(self.algo.get()) == 'Transposition Cipher' and self.key.get() != 0:
             a = str(self.text.get())
             numOfColumns = math.ceil(len(a) / self.key.get())
             numOfRows = self.key.get()
