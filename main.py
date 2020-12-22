@@ -7,7 +7,7 @@ import math
 class Pycrypto():
     def __init__(self, root):
         self.root = root
-        self.root.title("PyCrypto")
+        self.root.title("PyCrypto 1.0")
         self.root.geometry("1200x600+0+0")
         abg = "Cyan3"
         self.root.configure(bg=abg)
