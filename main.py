@@ -16,30 +16,23 @@ class Pycrypto():
         bclr = "Orange"
         title = Label(self.root, text="PyCrypto", bg=bg_clr, fg=t_clr, bd=12, relief=GROOVE, font=("arial", 30))
         title.pack(fill=X)
-
         self.text = StringVar()
         self.algo = StringVar()
         self.result = StringVar()
         self.key = IntVar()
-
         Label(self.root, text="Input Text", font=("arial", 15, "bold"), bg=abg, fg=t_clr).place(x=50, y=100)
         Entry(self.root, width=100, font="arial 15", bd=7, relief=SUNKEN,textvariable=self.text).place(x=50, y=170)
-
         Label(self.root, text="Choose Algorithm", font=("arial", 15, "bold"), bg=abg, fg=t_clr, padx=20, pady=10).place(x=100, y=250)
         algochoosen = ttk.Combobox(self.root,values=['Caesar Cipher','ROT13 Cipher','Transposition Cipher'], font=("arial", 13),width=22, textvariable=self.algo)
         algochoosen.place(x=300,y= 260)
         algochoosen.current(0)
-
         Label(self.root, text="Enter Key", font=("arial", 15, "bold"), bg=abg, fg=t_clr, padx=30, pady=10).place(x=600, y=250)
         Entry(self.root,width=20, font="arial 15",bd=7,textvariable=self.key,relief=SUNKEN,).place(x=730, y=255)
-
         Button(self.root,width=15,text="Encrypt", font=("arial", 14, "bold"), bg=bclr, fg=t_clr, bd=7, command=self.encrypt).place(x=70, y=490 )
         Button(self.root, width=15,text="Decrypt",font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7, command=self.decrypt).place(x=290,y=490)
         Button(self.root, width=15,text="Swap Output",font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7, command=self.swap).place(x=510,y=490)
-
         Label(self.root, text="Output Text", font=("arial", 15, "bold"), bg=abg, fg=t_clr).place(x=50, y=330)
         Entry(self.root, width=100, font="arial 15", bd=7,textvariable=self.result,  relief=SUNKEN).place(x=50, y=400)
-
         exit_button = Button(self.root, width=15,text="Exit",command = self.exit ,font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7)
         exit_button.place(x=950, y=490)
         clear_button = Button(self.root, width=15, text="Clear",command= self.clear_all ,font=("arial", 14, "bold"), bg=bclr,fg=t_clr, bd=7)
@@ -58,7 +51,6 @@ class Pycrypto():
             ciphertext = ''.join(ciphertext)
             self.result.set(ciphertext)
             pyperclip.copy(ciphertext)
-
         elif str(self.algo.get()) == 'Caesar Cipher' or 'ROT13 Cipher':
             if str(self.algo.get()) == 'ROT13 Cipher':
                 self.key.set(13)
