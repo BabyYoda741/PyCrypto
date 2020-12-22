@@ -35,6 +35,7 @@ class Pycrypto():
 
         Button(self.root,width=15,text="Encrypt", font=("arial", 14, "bold"), bg=bclr, fg=t_clr, bd=7, command=self.encrypt).place(x=650, y=243 )
         Button(self.root, width=15,text="Decrypt",font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7, command=self.decrypt).place(x=650,y=343)
+        Button(self.root, width=15,text="Swap Output",font=("arial", 14, "bold"), bg=bclr, fg=t_clr,bd=7, command=self.swap).place(x=550,y=500)
 
         F2 = LabelFrame(self.root, text="Output", font=("arial", 15, "bold"), bg=bg_clr, fg=t_clr, bd=7,relief=SUNKEN)
         F2.place(x=890, y=100, width=320, height=370)
@@ -50,7 +51,11 @@ class Pycrypto():
 
     def encrypt(self):
         self.result.set('')
-        if str(self.algo.get()) == 'Caesar Cipher':
+        if str(self.algo.get()) == 'Transposition Cipher':
+            self.result.set('Tra')
+        elif str(self.algo.get()) == 'Caesar Cipher' or 'ROT13 Cipher':
+            if str(self.algo.get()) == 'ROT13 Cipher':
+                self.key.set(13)
             a = str(self.text.get())
             alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             alphas = "abcdefghijklmnopqrstuvwxyz"
@@ -66,22 +71,31 @@ class Pycrypto():
                     self.res = self.res + str(letter)
             self.result.set(self.res)
 
-        elif str(self.algo.get()) == 'ROT13 Cipher':
-            self.result.set('Rot')
-
-        elif str(self.algo.get()) == 'Transposition Cipher':
-            self.result.set('Tra')
-
     def decrypt(self):
         self.result.set('')
-        if str(self.algo.get()) == 'Caesar Cipher':
-            self.result.set('Decae')
-
-        elif str(self.algo.get()) == 'ROT13 Cipher':
-            self.result.set('deRot')
-
-        elif str(self.algo.get()) == 'Transposition Cipher':
+        if str(self.algo.get()) == 'Transposition Cipher':
             self.result.set('deTra')
+        elif str(self.algo.get()) == 'Caesar Cipher' or 'ROT13 Cipher':
+            if str(self.algo.get()) == 'ROT13 Cipher':
+                self.key.set(13)
+            a = str(self.text.get())
+            alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            alphas = "abcdefghijklmnopqrstuvwxyz"
+            self.res = str(self.result.get())
+            for letter in a:
+                if letter in alpha:
+                    letter_index = (alpha.find(letter) - int(self.key.get())) % len(alpha)
+                    self.res = self.res + str(alpha[letter_index])
+                elif letter in alphas:
+                    letter_index = (alphas.find(letter) - int(self.key.get())) % len(alpha)
+                    self.res = self.res + str(alphas[letter_index])
+                else:
+                    self.res = self.res + str(letter)
+            self.result.set(self.res)
+
+    def swap(self):
+        self.text.set(str(self.result.get()))
+        self.result.set('')
 
     def clear_all(self):
         op = messagebox.askyesno("clear", "Do you really want to clear all data?")
